@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [EventController::class, 'index'])->name('home');
 Route::get('/evento/{id}', [EventController::class, 'show'])->name('event');
-Route::get('/panel-de-administrador', [DashboardController::class, 'index'])->name('admin');
+Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
