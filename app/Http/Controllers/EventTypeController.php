@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Event;
 use App\Models\EventType;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class EventTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +15,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
-        $eventTypes = EventType::all();
-        $users = User::all();
-        return view('pages.admin.dashboard', ['events' => $events, 'eventTypes' => $eventTypes, 'users' => $users]);
     }
 
     /**
@@ -30,7 +24,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.add-type-event');
     }
 
     /**
@@ -41,7 +35,15 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Titulo' => 'required|max:255',
+        ]);
+
+        $eventType = new EventType();
+        $eventType->Descripcion = $request->Titulo;
+        $eventType->save();
+
+        return redirect()->route('admin')->with('message', 'Añadido correctamente');
     }
 
     /**
@@ -52,7 +54,6 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -63,7 +64,6 @@ class DashboardController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -75,7 +75,6 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
@@ -85,7 +84,9 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { 
+        $eventType = EventType::find($id);
+        $eventType->delete();
+        return redirect()->route('admin')->with('message', 'Eliminado correctamente');
     }
 }

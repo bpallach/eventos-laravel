@@ -11,6 +11,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Inicio</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('admin') }}">Admin</a>
+                    </li>
                     {{-- <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ route('indexPackages') }}">Admin</a>
                     </li>

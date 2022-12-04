@@ -26,7 +26,9 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        $type_events = DB::table('tipo_acto')
+                            ->get();
+        return view('pages.admin.add-event', ['type_events' => $type_events]);
     }
 
     /**
@@ -37,7 +39,28 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Titulo' => 'required|max:255',
+            'fecha' => 'date|required',
+            'hora' => 'required',
+            'Descripcion_corta' => 'required|max:255',
+            'Descripcion_larga' => 'required|max:255',
+            'asistentes' => 'required|numeric|max:99999999',
+            'Id_tipo_acto' => 'required',
+        ]);
+
+        $event = new Event;
+        $event->Titulo = $request->Titulo;
+        $event->Fecha = $request->fecha;
+        $event->Hora = $request->hora;
+        $event->Descripcion_corta = $request->Descripcion_corta;
+        $event->Descripcion_larga = $request->Descripcion_larga;
+        $event->Num_asistentes = $request->asistentes;
+        $event->Id_tipo_acto = $request->Id_tipo_acto;
+        $event->save();
+
+        return redirect()->route('admin')->with('message', 'Añadido correctamente');
+        
     }
 
     /**
@@ -64,7 +87,10 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        //
+        $event = Event::find($id);
+        $type_events = DB::table('tipo_acto')
+                            ->get();
+        return view('pages.admin.edit-event', ['event' => $event]);
     }
 
     /**
@@ -76,7 +102,26 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'fecha' => 'date|required',
+            'hora' => 'required',
+            'descripcion_corta' => 'required|max:255',
+            'descripcion_larga' => 'required|max:255',
+            'asistentes' => 'required|numeric|max:99999999',
+        ]);
+
+        $event = Event::find($id);
+        $event->Titulo = $request->titulo;
+        $event->Fecha = $request->fecha;
+        $event->Hora = $request->hora;
+        $event->Descripcion_corta = $request->descripcion_corta;
+        $event->Descripcion_larga = $request->descripcion_larga;
+        $event->Num_asistentes = $request->asistentes;
+        $event->save();
+
+        return redirect()->route('admin')->with('message', 'Editado correctamente');
     }
 
     /**
@@ -87,6 +132,11 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        DB::table('inscritos')->where('id_acto',$id)->delete(); //primero elimino los usuarios inscritos en el evento
+
+        $event = Event::find($id);
+        $event->delete();
+        return redirect()->route('admin')->with('message', 'Eliminado correctamente');
     }
 }

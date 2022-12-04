@@ -7,9 +7,11 @@
     <section class="my-4 events row">
 
         @php
-            // echo "<pre>";
-            // echo var_dump($events);
-            // echo "</pre>";
+            if(auth()->check()){
+                echo "si";
+            }else{
+                echo "no";
+            }
         @endphp
 
         @foreach ($events as $event)
