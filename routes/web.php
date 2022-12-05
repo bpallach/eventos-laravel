@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventTypeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,21 +18,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [EventController::class, 'index'])->name('home');
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'create')->name('login');
+    Route::post('/login', 'store')->name('submitLogin');
+    Route::get('/logout', 'destroy')->name('logout');
+});  
 
-Route::get('/evento/{id}', [EventController::class, 'show'])->name('event');
+Route::middleware('auth')->group(function () {
 
-Route::get('/admin/tipo-evento/nuevo', [EventTypeController::class, 'create'])->name('addTypeEvent');
-Route::post('/admin/tipo-evento/nuevo', [EventTypeController::class, 'store'])->name('submitAddTypeEvent');
-Route::get('/admin/tipo-evento/eliminar/{id}', [EventTypeController::class, 'destroy'])->name('deleteTypeEvent');
+    Route::controller(EventController::class)->group(function () {
+        Route::get('/', 'index')->name('home');
+        Route::get('/evento/{id}', 'show')->name('event');
+    });
+    
+    Route::middleware('auth.admin')->group(function () {
 
-Route::get('/admin/evento/nuevo', [EventController::class, 'create'])->name('addEvent');
-Route::post('/admin/evento/nuevo', [EventController::class, 'store'])->name('submitAddEvent');
-Route::get('/admin/evento/editar/{id}', [EventController::class, 'edit'])->name('editEvent');
-Route::patch('/admin/evento/editado/{id}', [EventController::class, 'update'])->name('submitEditEvent');
-Route::get('/admin/evento/eliminar/{id}', [EventController::class, 'destroy'])->name('deleteEvent');
+        Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
+        Route::controller(EventTypeController::class)->group(function () {
+            Route::get('/admin/tipo-evento/nuevo','create')->name('addTypeEvent');
+            Route::post('/admin/tipo-evento/nuevo','store')->name('submitAddTypeEvent');
+            Route::get('/admin/tipo-evento/eliminar/{id}','destroy')->name('deleteTypeEvent');
+        });
 
-Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
+        Route::controller(EventController::class)->group(function () {
+            Route::get('/admin/evento/nuevo', 'create')->name('addEvent');
+            Route::post('/admin/evento/nuevo', 'store')->name('submitAddEvent');
+            Route::get('/admin/evento/editar/{id}', 'edit')->name('editEvent');
+            Route::patch('/admin/evento/editado/{id}', 'update')->name('submitEditEvent');
+            Route::get('/admin/evento/eliminar/{id}', 'destroy')->name('deleteEvent');
+        });    
+
+    });
+});
 
 

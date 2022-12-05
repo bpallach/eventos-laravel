@@ -4,18 +4,9 @@
 <main class="container">
     <h1 class="text-primary mt-5">Eventos disponibles</h1>
     <section class="my-4 events row">
-
-        @php
-            // if(auth()->check()){
-            //     echo "si";
-            // }else{
-            //     echo "no";
-            // }
-        @endphp
-
         @foreach ($events as $event)
             @php
-                $suscribed = getSuscribedEvent(1,$event->Id_acto);
+                $suscribed = getSuscribedEvent(Auth::user()->Id_Persona,$event->Id_acto);
             @endphp 
             <div class="card col-sm-3 col-md-6 col-lg-4">
                 <div class="card-body">
