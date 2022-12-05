@@ -1,37 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-
 <main class="container">
     <h1 class="text-primary mt-5">Eventos disponibles</h1>
     <section class="my-4 events row">
 
         @php
-            if(auth()->check()){
-                echo "si";
-            }else{
-                echo "no";
-            }
+            // if(auth()->check()){
+            //     echo "si";
+            // }else{
+            //     echo "no";
+            // }
         @endphp
 
         @foreach ($events as $event)
+            @php
+                $suscribed = getSuscribedEvent(1,$event->Id_acto);
+            @endphp 
             <div class="card col-sm-3 col-md-6 col-lg-4">
                 <div class="card-body">
                     <a href="{{ route('event', [$event->Id_acto]) }}">
                         <h5 class="card-title">{{ $event->Titulo}} </h5>
                     </a>
                     <p class="card-text"><strong> {{ $event->Descripcion_corta}} </strong></p>
-                    <p class="card-text"><strong>Asistentes:</strong> {{ $event->Num_asistentes}} </p>
-                    <?php 
-                    
-                    if(1>0){ ?>
+                    <p class="card-text"><strong>Asistentes:</strong> {{ $event->Num_asistentes}} </p> 
+                                      
+                    <?php if($suscribed > 0){ ?>
                         <a href="./controllers/submit_unsuscribe_event_controller.php?id={{ $event->Id_acto}} " class="btn btn-danger">Desuscribirse</a>
                     <?php }else{ ?>
                         <a href="#?id={{ $event->Id_acto;}} " class="btn btn-success">Inscribirse</a>
-                    <?php }
-
-                    ?>
-                    
+                    <?php }?>
                 </div>
             </div>
         @endforeach
