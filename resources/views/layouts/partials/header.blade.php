@@ -16,7 +16,7 @@
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Perfil</a>
+                            <a class="nav-link active" aria-current="page" href="{{ route('profile') }}">Perfil</a>
                         </li>
 
                         @if (isAdmin())

@@ -6,6 +6,7 @@ use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\InscribedController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/evento/{id}', 'show')->name('event');
     });
 
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/perfil', 'indexProfile')->name('profile');
+        Route::post('/perfil', 'store')->name('submitProfile');
+    });
+    
     Route::controller(InscribedController::class)->group(function () {
 
         Route::get('/suscribe', 'create')->name('inscribe');
