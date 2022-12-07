@@ -17,10 +17,10 @@
                     <p class="card-text"><strong>Asistentes:</strong> {{ $event->Num_asistentes}} </p> 
                                       
                     <?php if($suscribed > 0){ ?>
-                        <a href="./controllers/submit_unsuscribe_event_controller.php?id={{ $event->Id_acto}} " class="btn btn-danger">Desuscribirse</a>
+                        <a href="{{ route('destroyInscribe', ['id' => $event->Id_acto, 'idPersona' => Auth::user()->Id_Persona]) }}" class="btn btn-danger">Desuscribirse</a>
                     <?php }else{ ?>
-                        <a href="#?id={{ $event->Id_acto;}} " class="btn btn-success">Inscribirse</a>
-                    <?php }?>
+                        <a href="{{ route('submitInscribe', [$event->Id_acto]) }}" class="btn btn-success">Inscribirse</a>
+                    <?php } ?>
                 </div>
             </div>
         @endforeach

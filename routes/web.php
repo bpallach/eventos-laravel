@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventTypeController;
+use App\Http\Controllers\InscribedController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::controller(EventController::class)->group(function () {
         Route::get('/', 'index')->name('home');
         Route::get('/evento/{id}', 'show')->name('event');
+    });
+
+    Route::controller(InscribedController::class)->group(function () {
+
+        Route::get('/suscribe', 'create')->name('inscribe');
+        Route::post('/suscribe', 'storeFromAdmin')->name('storeFromAdmin');
+
+        Route::get('/suscribe/{id}', 'store')->name('submitInscribe');
+        Route::get('/suscribe/delete/{id}/user/{idPersona}', 'destroy')->name('destroyInscribe');
     });
     
     Route::middleware('auth.admin')->group(function () {

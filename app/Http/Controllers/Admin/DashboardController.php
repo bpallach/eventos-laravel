@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventType;
+use App\Models\Inscrito;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,8 @@ class DashboardController extends Controller
         $events = Event::all();
         $eventTypes = EventType::all();
         $users = User::all();
-        return view('pages.admin.dashboard', ['events' => $events, 'eventTypes' => $eventTypes, 'users' => $users]);
+        $inscribeds = Inscrito::all();
+        return view('pages.admin.dashboard', ['events' => $events, 'eventTypes' => $eventTypes, 'users' => $users, 'inscribeds' => $inscribeds]);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Event;
 use App\Models\Inscrito;
+use App\Models\Persona;
 use Illuminate\Support\Facades\Auth;
 
 if(!function_exists('getSuscribedEvent')){
@@ -20,3 +22,20 @@ if(!function_exists('isAdmin')){
         return false;
     }
 }
+
+if(!function_exists('getPersona')){
+    function getPersona($id)
+    {
+        $persona = Persona::find($id);
+        return $persona->Nombre . " " . $persona->Apellido1;
+    }
+}
+
+if(!function_exists('getEventName')){
+    function getEventName($id)
+    {
+        $event = Event::find($id);
+        return $event->Titulo;
+    }
+}
+

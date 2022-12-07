@@ -112,6 +112,43 @@
         </table>
     </section>
 
+    <section class="admin-panel-table admin-type-events my-4">
+
+        <div class="d-flex align-items-center gap-4">
+            <h2 class="text-primary mb-3">Inscritos</h2>
+            <a class="btn btn-primary" href="{{ route('inscribe') }}">Inscribir usuario</a>
+        </div>
+
+        <table class="table table-striped-columns table-bordered">
+            <thead>
+                <tr>
+                    <th>Id inscripción</th>
+                    <th>Persona</th>
+                    <th>Acto</th>
+                    <th>Fecha Inscripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                foreach($inscribeds as $inscribed) : 
+                    $personaName = getPersona($inscribed->Id_persona);
+                    $eventName = getEventName($inscribed->id_acto);
+                ?>
+                    <tr>
+                        <td>{{ $inscribed->Id_inscripcion }}</td>
+                        <td>{{ $personaName }}</td>
+                        <td>{{ $eventName }}</td>
+                        <td>{{ $inscribed->Fecha_inscripcion }}</td>
+                        <td>
+                            <a class="text-danger" href="{{ route('destroyInscribe', ['id' => $inscribed->id_acto, 'idPersona' => $inscribed->Id_persona]) }}"><i class="bi bi-trash3"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section>
+
 </main>
 
 @endsection

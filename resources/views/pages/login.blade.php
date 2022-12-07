@@ -30,7 +30,7 @@
                 @endif
 
                 <button type="submit" class="btn btn-outline-primary">Iniciar Sesión</button>
-                <a href="./registrarse.php" class="btn btn-danger">Registrarse</a>
+                <a href="{{ route('register') }}" class="btn btn-danger">Registrarse</a>
                 @csrf
             </form>
         </div>
