@@ -7,6 +7,7 @@ use App\Http\Controllers\InscribedController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,5 +73,7 @@ Route::middleware('auth')->group(function () {
 
     });
 });
+
+Route::get('/webapi/events', [Event::class, 'getJsonEvents'])->name('getJsonEvents');
 
 
