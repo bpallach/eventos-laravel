@@ -8,12 +8,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav text-uppercase">
-
+                   
+                    <li class="nav-item">
+                        <a class="nav-link active link-light" aria-current="page" href="{{ route('home') }}">Inicio</a>
+                    </li>
+                    
                     @if (Auth::check())
-
-                        <li class="nav-item">
-                            <a class="nav-link active link-light" aria-current="page" href="{{ route('home') }}">Inicio</a>
-                        </li>
 
                         @if (isAdmin())
                             <li class="nav-item">
@@ -32,7 +32,7 @@
                         <li class="nav-item">
                             <a class="nav-link active link-light" aria-current="page" href="{{ route('login') }}">Iniciar sesion</a>
                         </li>
-                    @endif                
+                    @endif       
                     
                 </ul>
             </div>

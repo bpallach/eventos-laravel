@@ -149,6 +149,44 @@
         </table>
     </section>
 
+    <section class="admin-panel-table admin-users my-4">
+
+        <div class="d-flex align-items-center gap-4">
+            <h2 class="text-primary mb-3">Tabla de Ponentes</h2>
+            <a class="btn btn-primary" href="{{ route('addSpeaker') }}">Inscribir Ponente</a>
+        </div>
+        
+        <table class="table table-striped-columns table-bordered">
+            <thead>
+                <tr>
+                    <th>id_ponente</th>
+                    <th>Persona</th>
+                    <th>Acto</th>
+                    <th>Orden</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                foreach($speakers as $speaker) : 
+                
+                    $personaName = getPersona($inscribed->Id_persona);
+                    $eventName = getEventName($inscribed->id_acto);
+                ?>
+                    <tr>
+                        <td>{{ $speaker->id_ponente }}</td>
+                        <td>{{ $personaName }}</td>
+                        <td>{{ $eventName }}</td>
+                        <td>{{ $speaker->Orden }}</td>
+                        <td>
+                            <a class="text-danger" href="{{ route('deleteSpeaker', [$speaker->id_ponente]) }}"><i class="bi bi-trash3"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section>
+
 </main>
 
 @endsection

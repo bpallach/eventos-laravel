@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\InscribedController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\UserController;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +74,17 @@ Route::middleware('auth')->group(function () {
             Route::patch('/admin/evento/editado/{id}', 'update')->name('submitEditEvent');
             Route::get('/admin/evento/eliminar/{id}', 'destroy')->name('deleteEvent');
         });    
+
+        Route::controller(SpeakerController::class)->group(function() {
+            Route::get('/admin/ponente/nuevo', 'create')->name('addSpeaker');
+            Route::post('/admin/ponente/nuevo', 'store')->name('storeSpeakerFromAdmin');
+            Route::get('/admin/ponente/eliminar/{id}', 'destroy')->name('deleteSpeaker');
+        });
+
+        Route::controller(DocumentController::class)->group(function() {
+            Route::post('/event/upload/document', 'store')->name('uploadDocument');
+            Route::get('/event/delete/document/{id}', 'destroy')->name('destroyDocument');
+        });
 
     });
 });

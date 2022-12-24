@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -75,8 +77,9 @@ class EventController extends Controller
         $eventType = DB::table('tipo_acto')
                             ->where('Id_tipo_acto', $event->Id_tipo_acto)
                             ->get();
+        $documents = Document::where('Id_acto', $id)->orderBy('Orden', 'ASC')->get();
 
-        return view('pages.event', ['event' => $event, 'eventType' => $eventType]);
+        return view('pages.event', ['event' => $event, 'eventType' => $eventType, 'documents' => $documents]);
     }
 
     /**

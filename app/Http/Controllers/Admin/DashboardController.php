@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventType;
 use App\Models\Inscrito;
+use App\Models\Speaker;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class DashboardController extends Controller
         $eventTypes = EventType::all();
         $users = User::all();
         $inscribeds = Inscrito::all();
-        return view('pages.admin.dashboard', ['events' => $events, 'eventTypes' => $eventTypes, 'users' => $users, 'inscribeds' => $inscribeds]);
+        $speakers = Speaker::all();
+        return view('pages.admin.dashboard', ['events' => $events, 'eventTypes' => $eventTypes, 'users' => $users, 'inscribeds' => $inscribeds, 'speakers' => $speakers]);
     }
 
     /**

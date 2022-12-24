@@ -3,6 +3,8 @@
 use App\Models\Event;
 use App\Models\Inscrito;
 use App\Models\Persona;
+use App\Models\Speaker;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 if(!function_exists('getSuscribedEvent')){
@@ -36,6 +38,21 @@ if(!function_exists('getEventName')){
     {
         $event = Event::find($id);
         return $event->Titulo;
+    }
+}
+
+if(!function_exists('isUserSpeakerOfThisEvent')){
+    function isUserSpeakerOfThisEvent($idPersona, $IdActo)
+    {
+        return Speaker::where('Id_persona', $idPersona)->where('Id_acto',$IdActo)->count();
+    }
+}
+
+if(!function_exists('getToday')){
+    function getToday()
+    {
+        $today = Carbon::now();
+        return $today->toDateString();
     }
 }
 

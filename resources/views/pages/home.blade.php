@@ -8,6 +8,7 @@
             @php
             if (isset(Auth::user()->Id_Persona)) {
                 $suscribed = getSuscribedEvent(Auth::user()->Id_Persona,$event->Id_acto);
+                $speaker = isUserSpeakerOfThisEvent(Auth::user()->Id_Persona,$event->Id_acto);
             }
             @endphp 
             <div class="card col-sm-3 col-md-6 col-lg-4">
@@ -23,6 +24,9 @@
                             <a href="{{ route('destroyInscribe', ['id' => $event->Id_acto, 'idPersona' => Auth::user()->Id_Persona]) }}" class="btn btn-danger">Desuscribirse</a>
                         <?php }else{ ?>
                             <a href="{{ route('submitInscribe', [$event->Id_acto]) }}" class="btn btn-success">Inscribirse</a>
+                        <?php } ?>
+                        <?php if ($speaker > 0) { ?>
+                            <span class="btn btn-success">Eres ponente del vento</span>
                         <?php } ?>
                     @else
                         <small class="opacity-50"><i><a href="{{ route('login') }}">Inicia sesión</a> para inscribirte</i></small>
