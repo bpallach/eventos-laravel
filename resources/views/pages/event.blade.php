@@ -4,12 +4,10 @@
 
 <main class="container">
     @php
-        // echo "<pre>";
-        //     echo var_dump();
-        // echo "</pre>";
-    @endphp
-
-    
+        if (isset(Auth::user()->Id_Persona)) {
+            $suscribed = getSuscribedEvent(Auth::user()->Id_Persona,$event->Id_acto);
+        }
+    @endphp 
 
     <section class="my-4 events d-flex flex-column align-items-start">
 
@@ -28,15 +26,18 @@
         <p><strong>Tipo acto: </strong>{{$eventType[0]->Descripcion}}</p>
 
         <p><strong>Descripción Larga: </strong>{{$event->Descripcion_larga}}</p>
-        
-        <?php 
-        if(1 > 0){ ?>
-            <a href="#?id={{$event->Id_acto}}" class="btn btn-danger">Desuscribirse</a>
-        <?php }else{ ?>
-            <a href="#?id={{$event->Id_acto}}" class="btn btn-success">Inscribirse</a>
-        <?php }
 
-        ?>
+        @if (isset(Auth::user()->Id_Persona))
+            <?php 
+            if($suscribed > 0){ ?>
+                <a href="{{ route('destroyInscribe', ['id' => $event->Id_acto, 'idPersona' => Auth::user()->Id_Persona]) }}" class="btn btn-danger">Desuscribirse</a>
+            <?php }else{ ?>
+                <a href="{{ route('submitInscribe', [$event->Id_acto]) }}" class="btn btn-success">Inscribirse</a>
+            <?php } ?>
+        @else
+            <small class="opacity-50"><i><a href="{{ route('login') }}">Inicia sesión</a> para inscribirte</i></small>
+        @endif
+        
     </section>
 
 </main>

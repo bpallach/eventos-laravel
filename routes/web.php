@@ -7,6 +7,7 @@ use App\Http\Controllers\InscribedController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,12 +32,14 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'store')->name('submitRegister');
 });  
 
+Route::controller(EventController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/evento/{id}', 'show')->name('event');
+});
+
 Route::middleware('auth')->group(function () {
 
-    Route::controller(EventController::class)->group(function () {
-        Route::get('/', 'index')->name('home');
-        Route::get('/evento/{id}', 'show')->name('event');
-    });
+    
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/perfil', 'indexProfile')->name('profile');
@@ -72,5 +75,7 @@ Route::middleware('auth')->group(function () {
 
     });
 });
+
+Route::get('/webapi/events', [Event::class, 'getJsonEvents'])->name('getJsonEvents');
 
 

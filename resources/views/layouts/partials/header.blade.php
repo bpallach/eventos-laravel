@@ -28,6 +28,10 @@
                         <li class="nav-item">
                             <a class="nav-link active link-light" aria-current="page" href="{{ route('logout') }}">Cerrar sesion</a>
                         </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link active link-light" aria-current="page" href="{{ route('login') }}">Iniciar sesion</a>
+                        </li>
                     @endif                
                     
                 </ul>
