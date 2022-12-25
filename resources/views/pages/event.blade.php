@@ -30,11 +30,22 @@
         <p><strong>Descripción Larga: </strong>{{$event->Descripcion_larga}}</p>
 
         @if (isset(Auth::user()->Id_Persona))
-            <?php 
-            if($suscribed > 0){ ?>
-                <a href="{{ route('destroyInscribe', ['id' => $event->Id_acto, 'idPersona' => Auth::user()->Id_Persona]) }}" class="btn btn-danger">Desuscribirse</a>
-            <?php }else{ ?>
-                <a href="{{ route('submitInscribe', [$event->Id_acto]) }}" class="btn btn-success">Inscribirse</a>
+                    
+            @if (eventHasPlaces($event->Id_acto))
+                <?php if($suscribed > 0){ ?>
+                    <a href="{{ route('destroyInscribe', ['id' => $event->Id_acto, 'idPersona' => Auth::user()->Id_Persona]) }}" class="btn btn-danger">Desuscribirse</a>
+                <?php }else{ ?>
+                    <a href="{{ route('submitInscribe', [$event->Id_acto]) }}" class="btn btn-success">Inscribirse</a>
+                <?php } ?>
+            @else
+                <?php if($suscribed > 0){ ?>
+                    <a href="{{ route('destroyInscribe', ['id' => $event->Id_acto, 'idPersona' => Auth::user()->Id_Persona]) }}" class="btn btn-danger">Desuscribirse</a>
+                <?php } ?>
+                <a href="#" class="btn btn-danger">No hay plazas disponibles</a>
+            @endif
+        
+            <?php if ($speaker > 0) { ?>
+                <span class="btn btn-success">Eres ponente del vento</span>
             <?php } ?>
         @else
             <small class="opacity-50"><i><a href="{{ route('login') }}">Inicia sesión</a> para inscribirte</i></small>
